@@ -157,9 +157,7 @@ const fadeUp = {
   }),
 }
 
-function ServiceCard({ Icon, titulo, descripcion, precio, index }) {
-  const [abierto, setAbierto] = useState(false)
-
+function ServiceCard({ Icon, titulo, descripcion, precio, index, abierto, onToggle }) {
   return (
     <motion.div
       variants={fadeUp}
@@ -172,7 +170,7 @@ function ServiceCard({ Icon, titulo, descripcion, precio, index }) {
       className={`${styles.card} ${abierto ? styles.cardAbierta : ''}`}
       animate={{ y: [0, -8, 0] }}
       transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 }}
-      onClick={() => setAbierto(a => !a)}
+      onClick={onToggle}
     >
       <div className={styles.cardHeader}>
         <div className={styles.icono}><Icon /></div>
@@ -207,6 +205,8 @@ function ServiceCard({ Icon, titulo, descripcion, precio, index }) {
 }
 
 export default function Servicios() {
+  const [abiertoIdx, setAbiertoIdx] = useState(null)
+
   return (
     <section id="servicios" className={styles.section}>
       <motion.div
@@ -240,6 +240,8 @@ export default function Servicios() {
             descripcion={descripcion}
             precio={precio}
             index={i}
+            abierto={abiertoIdx === i}
+            onToggle={() => setAbiertoIdx(abiertoIdx === i ? null : i)}
           />
         ))}
       </div>
