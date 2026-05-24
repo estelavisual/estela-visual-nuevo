@@ -1,0 +1,233 @@
+.section {
+  background: transparent;
+  padding: 7rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid var(--gold-border);
+}
+
+/* ── Decorador ── */
+.decorator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.dot {
+  font-size: 0.5rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.line {
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.7;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.9;
+}
+
+/* ── Título ── */
+.titulo {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  color: var(--white);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* ── Filtros ── */
+.filtros {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.filtro {
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  background: transparent;
+  padding: 0.55rem 1.3rem;
+  cursor: pointer;
+  transition: background 0.22s ease, color 0.22s ease;
+}
+
+.filtro:hover {
+  background: rgba(201, 168, 76, 0.12);
+}
+
+.filtroActivo {
+  background: var(--gold);
+  color: var(--black);
+}
+
+.filtroActivo:hover {
+  background: var(--gold);
+  opacity: 0.9;
+}
+
+/* ── Grilla ── */
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* ── Foto ── */
+.fotoWrapper {
+  position: relative;
+  height: 350px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.fotoWrapper:hover .foto {
+  transform: scale(1.05);
+}
+
+.fotoWrapperTall {
+  height: 500px;
+}
+
+.fotoWrapperDimmed .foto {
+  opacity: 0.75;
+  transition: transform 0.45s ease, opacity 0.35s ease;
+}
+
+.fotoWrapperDimmed:hover .foto {
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(201, 168, 76, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.fotoWrapper:hover .overlay {
+  background: rgba(201, 168, 76, 0.25);
+}
+
+.overlayLabel {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fotoWrapper:hover .overlayLabel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Lightbox ── */
+.lightboxBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  cursor: pointer;
+}
+
+.lightboxImg {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  cursor: default;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--gold);
+  background: none;
+  border: 1px solid var(--gold);
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  z-index: 201;
+}
+
+.lightboxClose:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .grilla {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section {
+    padding: 5rem 2rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .grilla {
+    grid-template-columns: 1fr;
+  }
+
+  .fotoWrapper {
+    height: 260px;
+  }
+
+  .section {
+    padding: 4rem 1.25rem;
+  }
+}

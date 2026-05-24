@@ -1,0 +1,268 @@
+.section {
+  background: transparent;
+  padding: 7rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ── Decorador ── */
+.decorator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.dot {
+  font-size: 0.5rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.line {
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.7;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.9;
+}
+
+/* ── Título ── */
+.titulo {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  color: var(--white);
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+/* ── Grilla ── */
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* ── Card ── */
+.card {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.card:hover {
+  border-color: var(--gold);
+}
+
+.cardAbierta {
+  border-color: var(--gold);
+}
+
+.cardHeader {
+  padding: 2.5rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+/* ── Flecha indicadora ── */
+.flecha {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 1rem;
+  transition: transform 0.35s ease;
+}
+
+.flechaAbierta {
+  transform: rotate(180deg);
+}
+
+.icono {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.cardTitulo {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.2;
+}
+
+.cardDesc {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.75;
+}
+
+/* ── Panel desplegable ── */
+.panel {
+  overflow: hidden;
+}
+
+.panelInner {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(201, 168, 76, 0.2);
+  padding: 1.5rem 2rem;
+}
+
+.precioContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+}
+
+.precioTexto {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.7;
+}
+
+.precioValor {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--gold);
+}
+
+/* ── Paquetes ── */
+.paquetes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.paquete {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(201, 168, 76, 0.1);
+  text-align: left;
+}
+
+.paqueteNum {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--gold);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.paqueteInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.paqueteNombre {
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--white);
+}
+
+.paqueteDetalle {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: var(--white-dim);
+}
+
+.paquetePrecio {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.nota {
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.7;
+  opacity: 0.8;
+  text-align: center;
+}
+
+/* ── Botón WhatsApp ── */
+.btnWA {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--gold);
+  padding: 0.7rem 1.5rem;
+  transition: opacity 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btnWA:hover {
+  opacity: 0.85;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .grilla {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section {
+    padding: 5rem 2rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .grilla {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 4rem 1.5rem;
+  }
+}

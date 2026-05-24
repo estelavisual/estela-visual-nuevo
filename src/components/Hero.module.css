@@ -1,0 +1,175 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+/* ── Contenido central ── */
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 2rem;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* ── Decorador ── */
+.decorator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--gold);
+}
+
+.dot {
+  font-size: 0.5rem;
+  line-height: 1;
+}
+
+.line {
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.7;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.9;
+}
+
+/* ── Título ── */
+.title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 6vw, 5.2rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--white);
+  letter-spacing: 0.01em;
+}
+
+.titleAccent {
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+/* ── Subtítulo ── */
+.subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(0.65rem, 1.4vw, 0.78rem);
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+  line-height: 2;
+}
+
+/* ── Botones ── */
+.actions {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.btnPrimary {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--black);
+  padding: 1rem 2.5rem;
+  transition: opacity 0.25s ease, transform 0.2s ease;
+}
+
+.btnPrimary:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+.btnSecondary {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 1rem 2.5rem;
+  transition: border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+.btnSecondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+/* ── Scroll hint ── */
+.scrollHint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scrollLine {
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.5; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.1); }
+}
+
+.scrollText {
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .content {
+    gap: 1.5rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    text-align: center;
+    padding: 0.9rem 2rem;
+  }
+}

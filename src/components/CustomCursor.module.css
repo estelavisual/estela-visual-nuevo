@@ -1,0 +1,56 @@
+/* Ocultá el cursor del sistema en todo el sitio */
+:global(body) {
+  cursor: none;
+}
+
+:global(a),
+:global(button),
+:global([role="button"]) {
+  cursor: none;
+}
+
+/* ── Punto central ── */
+.dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: #C9A84C;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  margin-left: -4px;
+  margin-top: -4px;
+  transition: opacity 0.2s ease;
+  will-change: transform;
+}
+
+.dotHidden {
+  opacity: 0;
+}
+
+/* ── Anillo exterior ── */
+.ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #C9A84C;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  margin-left: -18px;
+  margin-top: -18px;
+  transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease, background 0.25s ease;
+  will-change: transform;
+}
+
+.ringHover {
+  width: 50px;
+  height: 50px;
+  margin-left: -25px;
+  margin-top: -25px;
+  background: rgba(201, 168, 76, 0.2);
+}

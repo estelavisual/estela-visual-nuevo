@@ -1,0 +1,302 @@
+.section {
+  background: transparent;
+  padding: 7rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid var(--gold-border);
+}
+
+/* ── Decorador ── */
+.decorator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.dot {
+  font-size: 0.5rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.line {
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.7;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.9;
+}
+
+/* ── Título ── */
+.titulo {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  color: var(--white);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* ── Layout dos columnas ── */
+.inner {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 5rem;
+  width: 100%;
+  max-width: 1100px;
+  align-items: start;
+}
+
+/* ── Columna info ── */
+.infoCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding-top: 0.5rem;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a.infoItem:hover {
+  color: var(--gold);
+}
+
+.infoIcono {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoTexto {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: inherit;
+  line-height: 1.5;
+}
+
+/* ── Formulario ── */
+.form {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formLabel {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+.formInput,
+.formSelect,
+.formTextarea {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 300;
+  padding: 0.75rem 1rem;
+  outline: none;
+  transition: border-color 0.25s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.formInput:focus,
+.formSelect:focus,
+.formTextarea:focus {
+  border-color: var(--gold);
+}
+
+.formSelect {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.formSelect option {
+  background: #1a1a1a;
+  color: var(--white);
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+/* ── Confirmación de envío ── */
+.confirmacion {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  padding: 3.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.confirmTitulo {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--white);
+  margin-top: 0.5rem;
+}
+
+.confirmSubtitulo {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+}
+
+.confirmTexto {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.7;
+}
+
+.btnOtro {
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  background: transparent;
+  padding: 0.75rem 1.75rem;
+  cursor: pointer;
+  margin-top: 0.75rem;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.btnOtro:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* ── Mensajes de estado ── */
+.msgError {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #e05555;
+}
+
+/* ── Botón ── */
+.btnEnviar {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--black);
+  padding: 1.1rem 2.5rem;
+  border: none;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: opacity 0.25s ease, transform 0.2s ease;
+}
+
+.btnEnviar:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+.btnEnviar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .section {
+    padding: 5rem 2rem;
+  }
+
+  .btnEnviar {
+    align-self: stretch;
+    text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .form {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .section {
+    padding: 4rem 1.25rem;
+  }
+}

@@ -1,0 +1,172 @@
+.section {
+  background: transparent;
+  padding: 7rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid var(--gold-border);
+}
+
+/* ── Layout dos columnas ── */
+.inner {
+  max-width: 1100px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+/* ── Columna texto ── */
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Decorador ── */
+.decorator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.dot {
+  font-size: 0.5rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.line {
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.7;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.9;
+}
+
+/* ── Título ── */
+.titulo {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.1;
+}
+
+/* ── Subtítulo itálico dorado ── */
+.subtitulo {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* ── Párrafos ── */
+.parrafo {
+  font-family: var(--font-serif);
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.8;
+}
+
+/* ── Frase final ── */
+.frase {
+  font-family: var(--font-serif);
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1.75;
+  opacity: 0.85;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--gold-border);
+}
+
+/* ── Columna estadísticas ── */
+.statsCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-content: start;
+  padding-top: 4rem;
+}
+
+/* ── Stat card ── */
+.statCard {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  transition: border-color 0.3s ease;
+}
+
+.statCard:hover {
+  border-color: var(--gold);
+}
+
+.statValor {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.statLabel {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+  line-height: 1.5;
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .statsCol {
+    padding-top: 0;
+  }
+
+  .section {
+    padding: 5rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsCol {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .statCard {
+    padding: 1.5rem 1rem;
+  }
+}
