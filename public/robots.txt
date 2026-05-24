@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://estelavisual.com.ar/sitemap.xml
