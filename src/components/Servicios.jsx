@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from './Servicios.module.css'
+import { PRECIOS } from '../config/precios'
 
 const WA_URL = 'https://wa.me/5492246592370'
 
@@ -60,52 +61,37 @@ const IconClap = () => (
   </svg>
 )
 
-const BtnWA = () => (
+const BtnWA = ({ texto = 'CONSULTAR POR WHATSAPP' }) => (
   <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={styles.btnWA}>
-    CONSULTAR POR WHATSAPP
+    {texto}
   </a>
+)
+
+const PaquetesList = ({ paquetes }) => (
+  <div className={styles.paquetes}>
+    {paquetes.map(p => (
+      <div key={p.num} className={styles.paquete}>
+        <span className={styles.paqueteNum}>{p.num}</span>
+        <div className={styles.paqueteInfo}>
+          <span className={styles.paqueteNombre}>{p.nombre}</span>
+          <span className={styles.paqueteDetalle}>{p.detalle}</span>
+        </div>
+        <span className={styles.paquetePrecio}>{p.precio}</span>
+      </div>
+    ))}
+  </div>
 )
 
 const PrecioInmobiliaria = () => (
   <div className={styles.precioContent}>
-    <div className={styles.paquetes}>
-      {[
-        { num: '01', nombre: 'BÁSICO', detalle: '15 fotos', precio: '$40.000 ARS' },
-        { num: '02', nombre: 'INTERMEDIO', detalle: '25 fotos + reel', precio: '$60.000 ARS' },
-        { num: '03', nombre: 'ELITE', detalle: '35 fotos + reel + copy', precio: '$75.000 ARS' },
-      ].map(p => (
-        <div key={p.num} className={styles.paquete}>
-          <span className={styles.paqueteNum}>{p.num}</span>
-          <div className={styles.paqueteInfo}>
-            <span className={styles.paqueteNombre}>{p.nombre}</span>
-            <span className={styles.paqueteDetalle}>{p.detalle}</span>
-          </div>
-          <span className={styles.paquetePrecio}>{p.precio}</span>
-        </div>
-      ))}
-    </div>
+    <PaquetesList paquetes={PRECIOS.inmobiliaria} />
     <p className={styles.nota}>Para inmobiliarias con varias propiedades mensuales ofrecemos planes especiales con precio por volumen. Consultanos directamente para armar algo a medida.</p>
   </div>
 )
 
 const PrecioCM = () => (
   <div className={styles.precioContent}>
-    <div className={styles.paquetes}>
-      {[
-        { num: '01', nombre: 'BÁSICO', detalle: '12 posts/mes', precio: '$60.000 ARS' },
-        { num: '02', nombre: 'INTERMEDIO', detalle: '20 posts + stories/mes', precio: '$90.000 ARS' },
-        { num: '03', nombre: 'ELITE', detalle: 'Plan completo mensual', precio: 'Consultar' },
-      ].map(p => (
-        <div key={p.num} className={styles.paquete}>
-          <span className={styles.paqueteNum}>{p.num}</span>
-          <div className={styles.paqueteInfo}>
-            <span className={styles.paqueteNombre}>{p.nombre}</span>
-            <span className={styles.paqueteDetalle}>{p.detalle}</span>
-          </div>
-          <span className={styles.paquetePrecio}>{p.precio}</span>
-        </div>
-      ))}
-    </div>
+    <PaquetesList paquetes={PRECIOS.cm} />
   </div>
 )
 
@@ -114,7 +100,7 @@ const SERVICIOS = [
     Icon: IconCamera,
     titulo: 'Fotografía de Eventos',
     descripcion: 'Capturamos cada momento con intención. Imágenes que cuentan la historia de tu evento con calidad editorial.',
-    precio: <div className={styles.precioContent}><p className={styles.precioTexto}>Consultanos según tu evento y necesidad.</p><BtnWA /></div>,
+    precio: <div className={styles.precioContent}><p className={styles.precioTexto}>Consultanos según tu evento y necesidad.</p><BtnWA texto="PEDIR PRESUPUESTO DE EVENTO" /></div>,
   },
   {
     Icon: IconHouse,
@@ -126,7 +112,7 @@ const SERVICIOS = [
     Icon: IconPerson,
     titulo: 'Books Personales',
     descripcion: 'Tu mejor versión en imágenes. Sesiones diseñadas para reflejar tu personalidad y potenciar tu presencia.',
-    precio: <div className={styles.precioContent}><p className={styles.precioTexto}>25/30 fotos editadas · Entrega Drive 48hs</p><p className={styles.precioValor}>$60.000 ARS</p><BtnWA /></div>,
+    precio: <div className={styles.precioContent}><p className={styles.precioTexto}>{PRECIOS.book.detalle}</p><p className={styles.precioValor}>{PRECIOS.book.precio}</p><BtnWA texto="RESERVAR MI SESIÓN" /></div>,
   },
   {
     Icon: IconChat,
@@ -138,13 +124,13 @@ const SERVICIOS = [
     Icon: IconMonitor,
     titulo: 'Diseño Web',
     descripcion: 'Sitios que convierten. Diseño pensado desde la experiencia del usuario hacia los objetivos de tu marca.',
-    precio: <div className={styles.precioContent}><p className={styles.precioTexto}>Cada proyecto es único. Consultanos para armar una propuesta a medida.</p><BtnWA /></div>,
+    precio: <div className={styles.precioContent}><p className={styles.precioTexto}>Cada proyecto es único. Consultanos para armar una propuesta a medida.</p><BtnWA texto="SOLICITAR PROPUESTA WEB" /></div>,
   },
   {
     Icon: IconClap,
     titulo: 'Contenido Audiovisual',
     descripcion: 'Video, reels y piezas visuales que capturan la atención en los primeros segundos y comunican con fuerza.',
-    precio: <div className={styles.precioContent}><p className={styles.precioTexto}>Consultar precio</p><BtnWA /></div>,
+    precio: <div className={styles.precioContent}><p className={styles.precioTexto}>Cotizamos según duración, formato y plataforma de destino.</p><BtnWA texto="COTIZAR AUDIOVISUAL" /></div>,
   },
 ]
 
@@ -168,8 +154,7 @@ function ServiceCard({ Icon, titulo, descripcion, precio, index, abierto, onTogg
     >
     <motion.div
       className={`${styles.card} ${abierto ? styles.cardAbierta : ''}`}
-      animate={{ y: [0, -8, 0] }}
-      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: index * 0.3 }}
+      whileHover={{ y: -8, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }}
       onClick={onToggle}
     >
       <div className={styles.cardHeader}>

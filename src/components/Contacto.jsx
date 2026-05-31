@@ -55,6 +55,10 @@ export default function Contacto() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    // Campo honeypot: si tiene valor, es un bot
+    const honeypot = formRef.current.querySelector('[name="_gotcha"]')
+    if (honeypot && honeypot.value) return
+
     setEstado('sending')
 
     const data = new FormData(formRef.current)
@@ -166,6 +170,9 @@ export default function Contacto() {
               custom={0.25}
               onSubmit={handleSubmit}
             >
+              {/* Honeypot anti-spam: oculto para humanos, visible para bots */}
+              <input name="_gotcha" type="text" tabIndex={-1} aria-hidden="true" style={{ display: 'none' }} />
+
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label className={styles.formLabel}>NOMBRE</label>
@@ -189,14 +196,25 @@ export default function Contacto() {
                 </div>
               </div>
 
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>SERVICIO</label>
-                <select name="servicio" className={styles.formSelect} defaultValue="">
-                  <option value="" disabled>Seleccioná un servicio</option>
-                  {SERVICIOS_OPTS.map(s => (
-                    <option key={s} value={s}>{s}</option>
-                  ))}
-                </select>
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>TELÉFONO <span className={styles.formLabelOpcional}>(opcional)</span></label>
+                  <input
+                    name="telefono"
+                    type="tel"
+                    className={styles.formInput}
+                    placeholder="+54 9 221 000-0000"
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>SERVICIO</label>
+                  <select name="servicio" className={styles.formSelect} defaultValue="">
+                    <option value="" disabled>Seleccioná un servicio</option>
+                    {SERVICIOS_OPTS.map(s => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               <div className={styles.formGroup}>

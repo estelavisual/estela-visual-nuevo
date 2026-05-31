@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import styles from './Ebook.module.css'
+import { PRECIOS } from '../config/precios'
 
 const HOTMART_URL = 'https://pay.hotmart.com/S105871132H'
 
@@ -16,14 +17,23 @@ const float = {
   animate: {
     y: [0, -14, 0],
     rotateY: [0, 6, 0],
-    transition: {
-      duration: 4,
-      ease: 'easeInOut',
-      repeat: Infinity,
-      repeatType: 'loop',
-    },
+    transition: { duration: 4, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop' },
   },
 }
+
+const BENEFICIOS = [
+  'Cómo crear contenido que vende sin parecer publicidad',
+  'Estrategia de publicaciones para Instagram y Facebook',
+  'Plantillas de copy listas para usar',
+  'Cómo transformar seguidores en clientes reales',
+  'Errores que cometen el 90% de los negocios en redes',
+]
+
+const IconCheck = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M2 7l3.5 3.5L12 3" />
+  </svg>
+)
 
 export default function Ebook() {
   return (
@@ -85,16 +95,29 @@ export default function Ebook() {
             sino que convierte seguidores en clientes reales.
           </motion.p>
 
-          <motion.p
-            className={styles.subtitulo}
+          {/* Beneficios */}
+          <motion.ul
+            className={styles.beneficios}
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             custom={0.3}
           >
-            ESTRATEGIA · TEXTOS · PLANTILLAS
-          </motion.p>
+            {BENEFICIOS.map((b, i) => (
+              <motion.li
+                key={i}
+                className={styles.beneficio}
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.35 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <span className={styles.beneficioIcono}><IconCheck /></span>
+                <span>{b}</span>
+              </motion.li>
+            ))}
+          </motion.ul>
 
           <motion.div
             className={styles.acciones}
@@ -102,7 +125,7 @@ export default function Ebook() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            custom={0.4}
+            custom={0.7}
           >
             <a
               href={HOTMART_URL}
@@ -110,9 +133,8 @@ export default function Ebook() {
               rel="noopener noreferrer"
               className={styles.btnPrimary}
             >
-              COMPRAR AHORA — $9.99 USD
+              COMPRAR AHORA — {PRECIOS.ebook.precio}
             </a>
-
           </motion.div>
 
           <motion.p
@@ -121,7 +143,7 @@ export default function Ebook() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            custom={0.5}
+            custom={0.8}
           >
             ACCESO INMEDIATO · PDF DESCARGABLE · GARANTÍA 15 DÍAS
           </motion.p>

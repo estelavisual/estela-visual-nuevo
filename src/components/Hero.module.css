@@ -12,12 +12,13 @@
   position: relative;
   z-index: 2;
   text-align: center;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
   max-width: 900px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.75rem;
 }
 
 /* ── Decorador ── */
@@ -43,9 +44,9 @@
 
 .label {
   font-family: var(--font-sans);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 500;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--gold);
   opacity: 0.9;
@@ -54,7 +55,7 @@
 /* ── Título ── */
 .title {
   font-family: var(--font-serif);
-  font-size: clamp(2.8rem, 6vw, 5.2rem);
+  font-size: clamp(2.4rem, 7vw, 5.2rem);
   font-weight: 300;
   line-height: 1.1;
   color: var(--white);
@@ -70,9 +71,9 @@
 /* ── Subtítulo ── */
 .subtitle {
   font-family: var(--font-sans);
-  font-size: clamp(0.65rem, 1.4vw, 0.78rem);
+  font-size: clamp(0.6rem, 1.8vw, 0.78rem);
   font-weight: 400;
-  letter-spacing: 0.3em;
+  letter-spacing: clamp(0.12em, 1.5vw, 0.3em);
   text-transform: uppercase;
   color: var(--white-dim);
   line-height: 2;
@@ -81,10 +82,11 @@
 /* ── Botones ── */
 .actions {
   display: flex;
-  gap: 1.25rem;
+  gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
+  width: 100%;
 }
 
 .btnPrimary {
@@ -97,6 +99,7 @@
   color: var(--black);
   padding: 1rem 2.5rem;
   transition: opacity 0.25s ease, transform 0.2s ease;
+  white-space: nowrap;
 }
 
 .btnPrimary:hover {
@@ -114,6 +117,7 @@
   border: 1px solid rgba(255, 255, 255, 0.35);
   padding: 1rem 2.5rem;
   transition: border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  white-space: nowrap;
 }
 
 .btnSecondary:hover {
@@ -156,20 +160,57 @@
   opacity: 0.7;
 }
 
-/* ── Mobile ── */
-@media (max-width: 640px) {
+/* ── Tablet ── */
+@media (max-width: 768px) {
   .content {
     gap: 1.5rem;
+    padding: 0 1.25rem;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .content {
+    gap: 1.25rem;
+    padding: 0 1.25rem;
+  }
+
+  .title {
+    font-size: clamp(2.2rem, 10vw, 3rem);
+    line-height: 1.08;
+  }
+
+  .subtitle {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    line-height: 1.8;
   }
 
   .actions {
     flex-direction: column;
-    width: 100%;
+    align-items: stretch;
   }
 
   .btnPrimary,
   .btnSecondary {
     text-align: center;
-    padding: 0.9rem 2rem;
+    padding: 1rem 1.5rem;
+    white-space: normal;
+  }
+
+  .scrollHint {
+    bottom: 1.5rem;
+  }
+}
+
+/* ── Mobile muy chico (SE, etc) ── */
+@media (max-width: 360px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .label {
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
   }
 }

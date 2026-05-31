@@ -120,15 +120,6 @@
   height: 500px;
 }
 
-.fotoWrapperDimmed .foto {
-  opacity: 0.75;
-  transition: transform 0.45s ease, opacity 0.35s ease;
-}
-
-.fotoWrapperDimmed:hover .foto {
-  opacity: 1;
-}
-
 .overlay {
   position: absolute;
   top: 0;
@@ -146,6 +137,22 @@
   background: rgba(201, 168, 76, 0.25);
 }
 
+.overlayIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  margin-bottom: 0.4rem;
+}
+
+.fotoWrapper:hover .overlayIcon {
+  opacity: 1;
+  transform: scale(1);
+}
+
 .overlayLabel {
   font-family: var(--font-sans);
   font-size: 0.65rem;
@@ -155,12 +162,47 @@
   color: var(--gold);
   opacity: 0;
   transform: translateY(6px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease 0.05s;
 }
 
 .fotoWrapper:hover .overlayLabel {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ── CTA al pie del portfolio ── */
+.ctaWrap {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.ctaTexto {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white-dim);
+  text-align: center;
+}
+
+.ctaBtn {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--gold);
+  padding: 1rem 2.5rem;
+  transition: opacity 0.25s ease, transform 0.2s ease;
+}
+
+.ctaBtn:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
 }
 
 /* ── Lightbox ── */
@@ -205,6 +247,88 @@
 .lightboxClose:hover {
   background: var(--gold);
   color: var(--black);
+}
+
+/* ── Navegación lightbox ── */
+.lightboxNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 201;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 13, 13, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--gold-border);
+  color: var(--gold);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.lightboxNav:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+.lightboxPrev {
+  left: 1.5rem;
+}
+
+.lightboxNext {
+  right: 1.5rem;
+}
+
+.lightboxCounter {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  opacity: 0.7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.swipeHint {
+  display: none;
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  opacity: 0.45;
+}
+
+@media (max-width: 768px) {
+  .swipeHint {
+    display: block;
+  }
+
+  .lightboxNav {
+    display: none;
+  }
+}
+
+/* ── Placeholder skeleton ── */
+.imgPlaceholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* ── Responsive ── */

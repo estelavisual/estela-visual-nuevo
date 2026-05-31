@@ -131,6 +131,15 @@ a.infoItem:hover {
   opacity: 0.85;
 }
 
+.formLabelOpcional {
+  font-size: 0.55rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--white-dim);
+  opacity: 0.6;
+  text-transform: none;
+}
+
 .formInput,
 .formSelect,
 .formTextarea {

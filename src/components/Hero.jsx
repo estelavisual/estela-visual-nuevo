@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import styles from './Hero.module.css'
 
 const fadeUp = {
@@ -11,6 +12,14 @@ const fadeUp = {
 }
 
 export default function Hero() {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <section className={styles.hero}>
 
@@ -68,6 +77,22 @@ export default function Hero() {
           </a>
         </motion.div>
       </div>
+
+      {/* Scroll hint — desaparece al hacer scroll */}
+      <AnimatePresence>
+        {!scrolled && (
+          <motion.div
+            className={styles.scrollHint}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+          >
+            <span className={styles.scrollLine} />
+            <span className={styles.scrollText}>SCROLL</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </section>
   )

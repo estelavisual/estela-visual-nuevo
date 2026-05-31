@@ -46,14 +46,14 @@
   font-weight: 300;
   color: var(--white);
   text-align: center;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3rem;
 }
 
-/* ── Grilla ── */
+/* ── Grilla 2 columnas ── */
 .grilla {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
   width: 100%;
   max-width: 1100px;
 }
@@ -67,21 +67,23 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, background 0.3s ease;
   cursor: pointer;
   overflow: hidden;
 }
 
 .card:hover {
-  border-color: var(--gold);
+  border-color: rgba(201, 168, 76, 0.5);
+  background: rgba(0, 0, 0, 0.45);
 }
 
 .cardAbierta {
-  border-color: var(--gold);
+  border-color: var(--gold) !important;
+  background: rgba(201, 168, 76, 0.05) !important;
 }
 
 .cardHeader {
-  padding: 2.5rem 2rem 2rem;
+  padding: 2.5rem 2.5rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -93,35 +95,48 @@
 .flecha {
   position: absolute;
   bottom: 0.75rem;
-  right: 1rem;
+  right: 1.25rem;
   transition: transform 0.35s ease;
+  opacity: 0.6;
 }
 
 .flechaAbierta {
   transform: rotate(180deg);
+  opacity: 1;
 }
 
 .icono {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .icono {
+  transform: scale(1.1);
 }
 
 .cardTitulo {
   font-family: var(--font-serif);
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 400;
   color: var(--white);
   line-height: 1.2;
+  transition: color 0.25s ease;
+}
+
+.cardAbierta .cardTitulo {
+  color: var(--gold);
 }
 
 .cardDesc {
   font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 300;
   color: var(--white-dim);
-  line-height: 1.75;
+  line-height: 1.8;
+  max-width: 420px;
 }
 
 /* ── Panel desplegable ── */
@@ -130,11 +145,11 @@
 }
 
 .panelInner {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-top: 1px solid rgba(201, 168, 76, 0.2);
-  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(201, 168, 76, 0.25);
+  padding: 1.75rem 2.5rem;
 }
 
 .precioContent {
@@ -147,7 +162,7 @@
 
 .precioTexto {
   font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 300;
   color: var(--white-dim);
   line-height: 1.7;
@@ -155,7 +170,7 @@
 
 .precioValor {
   font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 300;
   color: var(--gold);
 }
@@ -164,7 +179,7 @@
 .paquetes {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.6rem;
   width: 100%;
 }
 
@@ -172,9 +187,15 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.25rem;
   border: 1px solid rgba(201, 168, 76, 0.1);
   text-align: left;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.paquete:hover {
+  border-color: rgba(201, 168, 76, 0.3);
+  background: rgba(201, 168, 76, 0.03);
 }
 
 .paqueteNum {
@@ -184,6 +205,7 @@
   color: var(--gold);
   opacity: 0.6;
   flex-shrink: 0;
+  width: 2rem;
 }
 
 .paqueteInfo {
@@ -203,14 +225,14 @@
 
 .paqueteDetalle {
   font-family: var(--font-sans);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 300;
   color: var(--white-dim);
 }
 
 .paquetePrecio {
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 400;
   color: var(--gold);
   flex-shrink: 0;
@@ -218,7 +240,7 @@
 
 .nota {
   font-family: var(--font-serif);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-style: italic;
   font-weight: 300;
   color: var(--white-dim);
@@ -236,33 +258,59 @@
   text-transform: uppercase;
   color: var(--black);
   background: var(--gold);
-  padding: 0.7rem 1.5rem;
-  transition: opacity 0.2s ease;
+  padding: 0.8rem 1.75rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .btnWA:hover {
   opacity: 0.85;
+  transform: translateY(-1px);
 }
 
 /* ── Responsive ── */
-@media (max-width: 900px) {
-  .grilla {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .section {
-    padding: 5rem 2rem;
-  }
-}
-
-@media (max-width: 560px) {
+@media (max-width: 860px) {
   .grilla {
     grid-template-columns: 1fr;
   }
 
   .section {
-    padding: 4rem 1.5rem;
+    padding: 5rem 2rem;
+  }
+
+  .cardHeader {
+    padding: 2rem 2rem 1.75rem;
+  }
+
+  .panelInner {
+    padding: 1.5rem 2rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    padding: 4rem 1.25rem;
+  }
+
+  .cardHeader {
+    padding: 1.75rem 1.5rem 1.5rem;
+  }
+
+  .cardTitulo {
+    font-size: 1.25rem;
+  }
+
+  .cardDesc {
+    font-size: 0.8rem;
+  }
+
+  .panelInner {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .btnWA {
+    white-space: normal;
+    text-align: center;
   }
 }
