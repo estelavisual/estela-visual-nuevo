@@ -1,139 +1,96 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 import styles from './Navbar.module.css'
 
-const NAV_LINKS = [
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Portfolio', href: '#portfolio' },
-  { label: 'Nosotros', href: '#nosotros' },
+const ITEMS = [
+  { id: 'servicios', t: 'Servicios', n: '02A', d: 'Cinco servicios para tu marca.' },
+  { id: 'portfolio', t: 'Portfolio', n: '03A', d: 'Eventos, inmobiliaria, books y paisajes.' },
+  { id: 'nosotros', t: 'Nosotros', n: '04A', d: 'Dos hermanos, una mirada.' },
+  { id: 'contacto', t: 'Contacto', n: '05A', d: 'Contanos sobre tu proyecto.' },
 ]
-
-const SECCIONES = ['servicios', 'portfolio', 'ebook', 'nosotros', 'contacto']
-
-function useActiveSection() {
-  const [activa, setActiva] = useState('')
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiva(entry.target.id)
-        })
-      },
-      { rootMargin: '-40% 0px -55% 0px' }
-    )
-
-    SECCIONES.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
-
-    return () => observer.disconnect()
-  }, [])
-
-  return activa
-}
+const ORDER = ['inicio', ...ITEMS.map((i) => i.id)]
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuAbierto, setMenuAbierto] = useState(false)
-  const activa = useActiveSection()
+  const [active, setActive] = useState('inicio')
+  const [open, setOpen] = useState(false)
+  const [hover, setHover] = useState(null)
+  const [ang, setAng] = useState(0)
+  const [origin, setOrigin] = useState({ x: 0, y: 0 })
+  const dial = useRef(null)
+  const lens = useRef(null)
+
+  const activeIdx = ITEMS.findIndex((i) => i.id === active)
+  const home = activeIdx >= 0 ? activeIdx : 0
+  // gira por el camino más corto hacia el modo elegido
+  const aim = (i) => setAng((a) => a + ((((i * 90 - a) % 360) + 540) % 360) - 180)
+  const closeMenu = () => { setOpen(false); setHover(null) }
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    const io = new IntersectionObserver(
+      (es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+      { rootMargin: '-45% 0px -50% 0px' }
+    )
+    ORDER.forEach((id) => { const s = document.getElementById(id); if (s) io.observe(s) })
+    return () => io.disconnect()
   }, [])
 
-  // Bloquear scroll del body cuando el menú está abierto
   useEffect(() => {
-    document.body.style.overflow = menuAbierto ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [menuAbierto])
+    if (!open) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (e) => e.key === 'Escape' && closeMenu()
+    addEventListener('keydown', onKey)
+    lens.current?.querySelector('a')?.focus({ preventScroll: true })
+    return () => { removeEventListener('keydown', onKey); document.body.style.overflow = prev }
+  }, [open])
 
-  const cerrarMenu = () => setMenuAbierto(false)
+  const toggle = () => {
+    if (open) return closeMenu()
+    const r = dial.current.getBoundingClientRect()
+    setOrigin({ x: r.left + r.width / 2, y: r.top + r.height / 2 })
+    aim(home)
+    setOpen(true)
+  }
+
+  const frame = String(Math.max(1, ORDER.indexOf(active) + 1)).padStart(2, '0') + 'A'
+  const v = ITEMS[hover ?? home]
 
   return (
     <>
-      <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
-        <a href="#" className={styles.logo} aria-label="Inicio" onClick={cerrarMenu}>
-          <img src="/logo.png" alt="Estela Visual" style={{ height: '45px', width: 'auto' }} loading="eager" fetchPriority="high" />
-        </a>
+      <a className={styles.edge} href="#inicio" aria-label="Estela Visual, ir al inicio">
+        <span>Estela Visual</span>
+        <i />
+        <em>{frame}</em>
+      </a>
 
-        {/* Desktop */}
-        <div className={styles.right}>
-          <ul className={styles.links}>
-            {NAV_LINKS.map(({ label, href }) => (
-              <li key={href}>
-                <a
-                  href={href}
-                  className={`${styles.link} ${activa === href.slice(1) ? styles.linkActivo : ''}`}
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <a href="#contacto" className={styles.cta}>
-            CONTACTO
-          </a>
-        </div>
-
-        {/* Hamburguesa */}
-        <button
-          className={`${styles.hamburger} ${menuAbierto ? styles.hamburgerAbierto : ''}`}
-          onClick={() => setMenuAbierto(v => !v)}
-          aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
-          aria-expanded={menuAbierto}
-        >
-          <span />
-          <span />
-          <span />
+      <div className={`${styles.root} ${open ? styles.open : ''}`}>
+        <button ref={dial} type="button" className={styles.dial} onClick={toggle} aria-expanded={open} aria-controls="lente" aria-label={open ? 'Cerrar menú' : 'Abrir menú'}>
+          <span className={styles.knurl} />
+          <span className={`${styles.core} ${open ? styles.x : ''}`}>{open ? '×' : frame}</span>
         </button>
-      </nav>
 
-      {/* Menú móvil overlay */}
-      <AnimatePresence>
-        {menuAbierto && (
-          <motion.div
-            className={styles.mobileMenu}
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <ul className={styles.mobileLinks}>
-              {[...NAV_LINKS, { label: 'Contacto', href: '#contacto' }].map(({ label, href }, i) => (
-                <motion.li
-                  key={href}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + i * 0.07, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <a
-                    href={href}
-                    className={`${styles.mobileLink} ${activa === href.slice(1) ? styles.mobileLinkActivo : ''}`}
-                    onClick={cerrarMenu}
-                  >
-                    {label}
-                  </a>
-                </motion.li>
-              ))}
-            </ul>
-
-            <motion.div
-              className={styles.mobileSocial}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.45, duration: 0.4 }}
-            >
-              <a href="https://instagram.com/estelavisual" target="_blank" rel="noopener noreferrer" className={styles.mobileSocialLink}>
-                @estelavisual
+        <div id="lente" className={styles.iris} style={{ '--x': origin.x + 'px', '--y': origin.y + 'px' }}>
+          <nav ref={lens} className={styles.lens} aria-label="Principal" onMouseLeave={() => { setHover(null); aim(home) }}>
+            <span className={styles.ring} />
+            <span className={styles.rim} />
+            <span className={styles.wedge} style={{ transform: `rotate(${ang}deg)` }} />
+            <div className={styles.center}><b>{v.n}</b><span>{v.d}</span></div>
+            {ITEMS.map((it, i) => (
+              <a
+                key={it.id}
+                href={`#${it.id}`}
+                className={styles.item}
+                style={{ '--a': i * 90 + 'deg', '--i': i }}
+                tabIndex={open ? 0 : -1}
+                onMouseEnter={() => { setHover(i); aim(i) }}
+                onFocus={() => { setHover(i); aim(i) }}
+                onClick={closeMenu}
+              >
+                {it.t}
               </a>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ))}
+          </nav>
+        </div>
+      </div>
     </>
   )
 }

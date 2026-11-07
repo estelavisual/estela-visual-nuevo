@@ -1,214 +1,56 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
-import styles from './Nosotros.module.css'
+import b from './Section.module.css'
+import s from './Nosotros.module.css'
+import useReveal from './useReveal'
 
-// Cuando tengas la foto, reemplazá null por la ruta: '/nosotros.jpg'
 const FOTO_NOSOTROS = '/nosotros.jpeg'
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1], delay },
-  }),
-}
-
-const STATS = [
-  { valorNum: 10, sufijo: '+', label: 'AÑOS DE EXPERIENCIA' },
-  { valorNum: 100, sufijo: '%', label: 'SATISFACCIÓN O REPETIMOS' },
-  { valorNum: 24, sufijo: 'h', label: 'ENTREGA PRIORITARIA' },
-  { valorNum: 2, sufijo: '', label: 'FOTÓGRAFOS ESPECIALIZADOS' },
-]
-
-function useCountUp(target, duration = 1800, isActive = false) {
-  const [count, setCount] = useState(0)
-  const rafRef = useRef(null)
-
-  useEffect(() => {
-    if (!isActive) return
-    const start = performance.now()
-
-    const tick = (now) => {
-      const elapsed = now - start
-      const progress = Math.min(elapsed / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.round(eased * target))
-      if (progress < 1) rafRef.current = requestAnimationFrame(tick)
-    }
-
-    rafRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [target, duration, isActive])
-
-  return count
-}
-
-function StatCard({ valorNum, sufijo, label, delay }) {
-  const [visible, setVisible] = useState(false)
-  const ref = useRef(null)
-  const count = useCountUp(valorNum, 1600, visible)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
-      { threshold: 0.5 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [])
-
+function Marquee({ text, rev }) {
   return (
-    <motion.div
-      ref={ref}
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      custom={delay}
-    >
-      <motion.div
-        className={styles.statCard}
-        whileHover={{ y: -6, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } }}
-      >
-        <span className={styles.statValor}>{count}{sufijo}</span>
-        <span className={styles.statLabel}>{label}</span>
-      </motion.div>
-    </motion.div>
+    <div className={`${s.row} ${rev ? s.rev : ''}`} aria-hidden="true">
+      <div className={s.track}>
+        <span>{text}</span><span>{text}</span>
+      </div>
+    </div>
   )
 }
 
 export default function Nosotros() {
+  const ref = useReveal()
   return (
-    <section id="nosotros" className={styles.section}>
-      <div className={styles.inner}>
+    <section id="nosotros" ref={ref} className={`${b.sec} ${b.alt}`}>
+      <p className={`${b.label} ${b.rv}`} data-rv><em>04A</em><i />Sobre nosotros</p>
+      <h2 className={`${b.h2} ${b.rv}`} data-rv style={{ transitionDelay: '.08s' }}>10 años <em className={s.plus}>+</em> capturando momentos que no se volverán a repetir.</h2>
+      <p className={`${s.loc} ${b.rv}`} data-rv style={{ transitionDelay: '.12s' }}>La Plata - Buenos Aires</p>
 
-        {/* Columna izquierda — foto */}
-        <motion.div
-          className={styles.fotoCol}
-          initial={{ opacity: 0, x: -32 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {FOTO_NOSOTROS ? (
-            <>
-              <div className={styles.fotoWrapper}>
-                <img
-                  src={FOTO_NOSOTROS}
-                  alt="Sebastián y Fernanda — Estela Visual Estudio"
-                  className={styles.foto}
-                  loading="lazy"
-                />
-              </div>
-              <p className={styles.fotoPie}>SEBASTIÁN · FERNANDA</p>
-            </>
-          ) : (
-            <div className={styles.fotoPlaceholder}>
-              <p className={styles.fotoPlaceholderTexto}>
-                SEBASTIÁN · FERNANDA<br />
-                foto próximamente
-              </p>
-            </div>
-          )}
-        </motion.div>
+      <div className={`${s.marquee} ${b.rv}`} data-rv style={{ transitionDelay: '.14s' }}>
+        <Marquee text="DOS HERMANOS · UNA MIRADA · ESTELA VISUAL ESTUDIO · " />
+        <Marquee text="LA PLATA · BUENOS AIRES · " rev />
+      </div>
 
-        {/* Columna derecha — texto + stats */}
-        <div className={styles.textCol}>
-          <motion.div
-            className={styles.decorator}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0}
-          >
-            <span className={styles.dot}>●</span>
-            <span className={styles.line} />
-            <span className={styles.label}>SOBRE NOSOTROS</span>
-          </motion.div>
-
-          <motion.h2
-            className={styles.titulo}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0.1}
-          >
-            Dos hermanos. Una mirada.
-          </motion.h2>
-
-          <motion.p
-            className={styles.subtitulo}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0.2}
-          >
-            La fotografía no es algo que elegimos. Es algo que heredamos.
-          </motion.p>
-
-          <motion.p
-            className={styles.parrafo}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0.3}
-          >
-            Somos Sebastián y Fernanda. Nunca conocimos a nuestro abuelo, pero mamá siempre nos contaba que era un gran fotógrafo en su pueblo natal. Quizás fue él quien, sin saberlo, nos pasó algo especial — esa manera de mirar el mundo y querer capturarlo.
-          </motion.p>
-
-          <motion.p
-            className={styles.parrafo}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0.38}
-          >
-            Construimos nuestra experiencia fotografiando eventos, books personales y propiedades — incluso en Barcelona — perfeccionando el ojo y el criterio en cada trabajo.
-          </motion.p>
-
-          <motion.p
-            className={styles.parrafo}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0.46}
-          >
-            Hoy damos un paso más. Estela Visual no es solo fotografía — es nuestra apuesta por generar algo propio. Un estudio creativo integral que ayude a pymes, empresas y personas a contar mejor su historia.
-          </motion.p>
-
-          <motion.p
-            className={styles.frase}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0.54}
-          >
-            Somos dos personas simples, con ganas genuinas de crecer — y de hacer crecer a quienes confían en nosotros.
-          </motion.p>
-
-          {/* Estadísticas */}
-          <div className={styles.statsCol}>
-            {STATS.map(({ valorNum, sufijo, label }, i) => (
-              <StatCard
-                key={label}
-                valorNum={valorNum}
-                sufijo={sufijo}
-                label={label}
-                delay={0.6 + i * 0.08}
-              />
-            ))}
+      <div className={s.cols}>
+        <div className={`${s.fotoCol} ${b.rv}`} data-rv style={{ transitionDelay: '.2s' }}>
+          <figure className={s.foto}>
+            <img src={FOTO_NOSOTROS} alt="Sebastián y Fernanda — Estela Visual Estudio" loading="lazy" />
+          </figure>
+          <div className={s.mosaico}>
+            <img src="/nosotros-fer-1.jpg" alt="Fernanda fotografiando en una construcción abandonada" loading="lazy" />
+            <img src="/nosotros-fer-2.jpg" alt="Fernanda con la cámara en mano, en primer plano" loading="lazy" />
+            <img src="/nosotros-seba-1.jpg" alt="Sebastián fotografiando en la costa" loading="lazy" />
+            <img src="/nosotros-seba-2.jpg" alt="Sebastián fotografiando junto a un tronco en la playa" loading="lazy" />
           </div>
         </div>
 
+        <div className={s.txt}>
+          <p>Somos Fernanda y Sebastián — dos hermanos quienes no conocimos a nuestro abuelo. La gente del pueblo, en el cual nos criamos, decía que era un gran fotógrafo, y quizás por eso heredamos esta manera de mirar, sentir y de contar historias a través de la luz, los colores y las emociones.</p>
+          <p>Nos apasiona encontrar detalles que muchas veces pasan inadvertidos, detener el tiempo por un instante y transformar momentos en recuerdos que perduren para siempre.</p>
+          <p>A lo largo de nuestro camino, fuimos descubriendo distintas formas de expresar nuestra pasión: fotografía social, retratos, fotografía inmobiliaria y proyectos que nos permiten seguir creciendo, aprendiendo y explorando nuestra creatividad.</p>
+          <p>Creemos que una buena fotografía no necesita demasiadas palabras: tiene que emocionar, transmitir y despertar algo en quien la observa.</p>
+          <p>Somos Fernanda y Sebastián, dos personas simples, con ganas genuinas de crecer — y de hacer crecer a quienes confían en nosotros.</p>
+          <p className={s.cierre}>La fotografía es mucho más que nuestro trabajo: es nuestra pasión, nuestro lenguaje y nuestra manera de dejar un pedacito nuestro en cada imagen.</p>
+          <p className={s.cierre}>Hoy damos un paso más con Estela Visual: un estudio propio para ayudar a contar mejor cada historia.</p>
+        </div>
       </div>
+
     </section>
   )
 }
