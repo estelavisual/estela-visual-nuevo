@@ -29,14 +29,27 @@ export default function Nosotros() {
 
       <div className={s.cols}>
         <div className={`${s.fotoCol} ${b.rv}`} data-rv style={{ transitionDelay: '.2s' }}>
-          <figure className={s.foto}>
+          <figure className={`${s.pic} ${s.picBig}`}>
             <img src={FOTO_NOSOTROS} alt="Sebastián y Fernanda — Estela Visual Estudio" loading="lazy" />
+            <figcaption>Sebastián · Fernanda</figcaption>
           </figure>
           <div className={s.mosaico}>
-            <img src="/nosotros-fer-1.jpg" alt="Fernanda fotografiando en una construcción abandonada" loading="lazy" />
-            <img src="/nosotros-fer-2.jpg" alt="Fernanda con la cámara en mano, en primer plano" loading="lazy" />
-            <img src="/nosotros-seba-1.jpg" alt="Sebastián fotografiando en la costa" loading="lazy" />
-            <img src="/nosotros-seba-2.jpg" alt="Sebastián fotografiando junto a un tronco en la playa" loading="lazy" />
+            <figure className={s.pic}>
+              <img src="/nosotros-fer-1.jpg" alt="Fernanda fotografiando en una construcción abandonada" loading="lazy" />
+              <figcaption>Fernanda</figcaption>
+            </figure>
+            <figure className={s.pic}>
+              <img src="/nosotros-seba-1.jpg" alt="Sebastián fotografiando en la costa" loading="lazy" />
+              <figcaption>Sebastián</figcaption>
+            </figure>
+            <figure className={s.pic}>
+              <img src="/nosotros-fer-2.jpg" alt="Fernanda con la cámara en mano, en primer plano" loading="lazy" />
+              <figcaption>Fernanda</figcaption>
+            </figure>
+            <figure className={s.pic}>
+              <img src="/nosotros-seba-2.jpg" alt="Sebastián fotografiando junto a un tronco en la playa" loading="lazy" />
+              <figcaption>Sebastián</figcaption>
+            </figure>
           </div>
         </div>
 

@@ -28,7 +28,7 @@
 .go{animation:fl .24s ease-out}
 @keyframes fl{from{opacity:.9}to{opacity:0}}
 .tt p span{display:block}
-@media (max-width:700px){.hint{display:none}.hud{justify-content:center}.ph{max-height:30svh;max-width:calc(var(--w)*1.7)}.tt p{white-space:normal}}
+@media (max-width:700px){.hint{display:none}.hud{justify-content:center;padding-right:clamp(26px,6vw,90px)}.ph{max-height:30svh;max-width:calc(var(--w)*1.7)}.tt p{white-space:normal}}
 @media (prefers-reduced-motion:reduce){.go{animation-duration:.01s}.af svg{transition:none}}
 
 /* Salida de foco al bajar */
