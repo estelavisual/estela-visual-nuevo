@@ -2,6 +2,7 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Servicios from './components/Servicios'
+import DisenoWeb from './components/DisenoWeb'
 import Portfolio from './components/Portfolio'
 import Nosotros from './components/Nosotros'
 import Contacto from './components/Contacto'
@@ -16,10 +17,10 @@ export default function App() {
     <div className="app">
       <CustomCursor />
       <Diafragma />
-
       <Navbar />
       <Hero />
       <Servicios />
+      <DisenoWeb />
       <Portfolio />
       <Nosotros />
       <Contacto />

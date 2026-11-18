@@ -22,7 +22,6 @@ const Paquetes = ({ items }) => (
   </div>
 )
 
-// Tira de rollo: avanza sola y se acelera (o retrocede) con el scroll.
 const STRIP = ['evento-1', 'inmobiliaria-2', 'book-4', 'paisaje-1', 'evento-6', 'inmobiliaria-5', 'book-6', 'paisaje-5', 'evento-9', 'book-2']
 
 function Strip() {
@@ -58,30 +57,60 @@ function Strip() {
   )
 }
 
-// Fotos reveladas que caen sobre la mesa al abrir un servicio; se pueden arrastrar.
 const LAYOUT = [{ l: 2, t: 14, r: -6 }, { l: 33, t: 2, r: 5 }, { l: 55, t: 30, r: -3 }]
 
-const WEB = {
-  browser: (
-    <div className={s.browser}>
-      <span className={s.dots}><i /><i /><i /></span>
-      <span className={s.bhero} />
-      <span className={s.blocks}><i /><i /><i /></span>
+// Componente iframe-polaroid para Diseño Web
+function WebPrint({ url, cap, i, front }) {
+  const [pos, setPos] = useState({ x: 0, y: 0 })
+  const [z, setZ] = useState(i + 1)
+  const [drag, setDrag] = useState(false)
+  const st = useRef(null)
+  const L = LAYOUT[i]
+  const down = (e) => {
+    e.currentTarget.setPointerCapture(e.pointerId)
+    st.current = { px: e.clientX, py: e.clientY, x: pos.x, y: pos.y }
+    setDrag(true)
+    setZ(++front.current)
+  }
+  const move = (e) => {
+    if (!st.current) return
+    const box = e.currentTarget.parentElement.getBoundingClientRect()
+    const lim = (v, m) => Math.max(-m, Math.min(m, v))
+    setPos({ x: lim(st.current.x + e.clientX - st.current.px, box.width * 0.6), y: lim(st.current.y + e.clientY - st.current.py, box.height * 0.6) })
+  }
+  const up = () => { st.current = null; setDrag(false) }
+
+  return (
+    <div
+      className={`${s.print} ${drag ? s.drag : ''}`}
+      style={{ left: L.l + '%', top: L.t + '%', zIndex: z, '--dx': pos.x + 'px', '--dy': pos.y + 'px', '--r': L.r + 'deg', '--i': i }}
+      onPointerDown={down}
+      onPointerMove={move}
+      onPointerUp={up}
+      onPointerCancel={up}
+    >
+      <figure className={`${s.card} ${s.web}`} style={{ padding: '8px 8px 28px', background: '#0d0d0d', border: '1px solid #2a2a2a' }}>
+        <div style={{ width: '100%', aspectRatio: '4/5', overflow: 'hidden', position: 'relative', background: '#111' }}>
+          <iframe
+            src={url}
+            title={cap}
+            loading="lazy"
+            tabIndex={-1}
+            style={{
+              width: '300%',
+              height: '300%',
+              transformOrigin: 'top left',
+              transform: 'scale(0.333)',
+              border: 'none',
+              pointerEvents: 'none',
+              display: 'block',
+            }}
+          />
+        </div>
+        <figcaption style={{ color: '#888' }}>{cap}</figcaption>
+      </figure>
     </div>
-  ),
-  code: (
-    <pre className={s.code}>
-      <span>{'<h1>'}</span>Tu marca<span>{'</h1>'}</span>{'\n'}
-      <span>{'<a href="#contacto">'}</span>{'\n'}
-      {'  '}Hablemos{'\n'}
-      <span>{'</a>'}</span>
-    </pre>
-  ),
-  phone: (
-    <div className={s.phoneWrap}>
-      <div className={s.phone}><b /><u /><u /><u /></div>
-    </div>
-  ),
+  )
 }
 
 function Print({ p, i, front }) {
@@ -112,28 +141,25 @@ function Print({ p, i, front }) {
       onPointerUp={up}
       onPointerCancel={up}
     >
-      {p.web ? (
-        <figure className={`${s.card} ${s.web}`}>
-          {WEB[p.web]}
-          <figcaption>{p.cap}</figcaption>
-        </figure>
-      ) : (
-        <figure className={s.card}>
-          <img src={p.src} alt={`${p.cap}, trabajo de Estela Visual`} draggable={false} loading="lazy" decoding="async" />
-          {p.play && <span className={s.play} aria-hidden="true" />}
-          <figcaption>{p.cap}</figcaption>
-        </figure>
-      )}
+      <figure className={s.card}>
+        <img src={p.src} alt={`${p.cap}, trabajo de Estela Visual`} draggable={false} loading="lazy" decoding="async" />
+        {p.play && <span className={s.play} aria-hidden="true" />}
+        <figcaption>{p.cap}</figcaption>
+      </figure>
     </div>
   )
 }
 
-function Prints({ items }) {
+function Prints({ items, isWeb }) {
   const front = useRef(10)
   return (
     <div className={s.table}>
-      {items.map((p, i) => <Print key={p.src || p.cap} p={p} i={i} front={front} />)}
-      <span className={s.hint}>{items[0].web ? 'Arrastrá las piezas' : 'Arrastrá las fotos'}</span>
+      {items.map((p, i) =>
+        isWeb
+          ? <WebPrint key={p.url} url={p.url} cap={p.cap} i={i} front={front} />
+          : <Print key={p.src || p.cap} p={p} i={i} front={front} />
+      )}
+      <span className={s.hint}>{isWeb ? 'Arrastrá las webs' : 'Arrastrá las fotos'}</span>
     </div>
   )
 }
@@ -167,7 +193,12 @@ const SERVICIOS = [
     titulo: 'Diseño Web',
     descripcion: 'Sitios que convierten. Diseño pensado desde la experiencia del usuario hacia los objetivos de tu marca.',
     precio: <><Texto>Cada proyecto es único. Consultanos para armar una propuesta a medida.</Texto><BtnWA texto="Solicitar propuesta web" /></>,
-    prints: [{ web: 'browser', cap: 'Landing' }, { web: 'code', cap: 'Código' }, { web: 'phone', cap: 'Mobile' }],
+    isWeb: true,
+    prints: [
+      { url: 'https://raiz-estudio.sebas22lpda.workers.dev', cap: 'Raíz Estudio' },
+      { url: 'https://tostado.sebas22lpda.workers.dev', cap: 'Tostado' },
+      { url: 'https://sebastian-estela.sebas22lpda.workers.dev', cap: 'Sebastian Estela' },
+    ],
   },
 ]
 
@@ -178,13 +209,13 @@ export default function Servicios() {
 
   const toggle = (i) => {
     if (open === i) return setOpen(null)
-    setEpoch((e) => e + 1) // las fotos vuelven a caer sobre la mesa
+    setEpoch((e) => e + 1)
     setOpen(i)
   }
 
   return (
     <section id="servicios" ref={ref} className={b.sec}>
-<p className={`${b.label} ${b.rv}`} data-rv><em>02A</em><i />Servicios</p>
+      <p className={`${b.label} ${b.rv}`} data-rv><em>02A</em><i />Servicios</p>
       <h2 className={`${b.h2} ${b.rv}`} data-rv style={{ transitionDelay: '.08s' }}>Todo lo que tu marca necesita.</h2>
 
       <Strip />
@@ -206,7 +237,7 @@ export default function Servicios() {
                       <p className={s.desc}>{sv.descripcion}</p>
                       <div>{sv.precio}</div>
                     </div>
-                    <Prints key={epoch} items={sv.prints} />
+                    <Prints key={epoch} items={sv.prints} isWeb={!!sv.isWeb} />
                   </div>
                 </div>
               </div>
